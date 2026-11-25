@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bilisim-ders-programi-v2';
+const CACHE_NAME = 'okul-ders-programi-v5';
 const ASSETS = ['./', './index.html', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', (e) => {

@@ -1,7 +1,7 @@
 {
-  "name": "Bilişim Ders Programı",
+  "name": "Okul Ders Programı",
   "short_name": "Ders Programı",
-  "description": "Bildirimli ve düzenlenebilir haftalık Bilişim Teknolojileri ders programı",
+  "description": "Ortaokul öğretmenleri için canlı sınıf takip ve bildirim uygulaması",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "any",
