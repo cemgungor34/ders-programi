@@ -1,7 +1,7 @@
 {
   "name": "Bilişim Ders Programı",
   "short_name": "Ders Programı",
-  "description": "Canlı sınıf takip özellikli haftalık Bilişim Teknolojileri ders programı",
+  "description": "Bildirimli ve düzenlenebilir haftalık Bilişim Teknolojileri ders programı",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "any",

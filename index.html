@@ -31,12 +31,12 @@
   body {
     background: var(--bg);
     color: var(--text-main);
-    padding: 12px 12px 32px;
+    padding: 12px 12px 36px;
     min-height: 100vh;
   }
 
   .container {
-    max-width: 1100px;
+    max-width: 1120px;
     margin: 0 auto;
   }
 
@@ -141,19 +141,34 @@
     color: rgba(255, 255, 255, 0.85);
   }
 
-  .btn-bell-settings {
+  .banner-btns {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .btn-glass {
     background: rgba(255, 255, 255, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.35);
     color: #fff;
-    padding: 7px 12px;
+    padding: 7px 11px;
     border-radius: 10px;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 700;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
   }
 
-  /* ZİL SAATLERİ AYAR PANELİ */
-  .bell-panel {
+  .btn-glass.notif-on {
+    background: rgba(16, 185, 129, 0.35);
+    border-color: #6ee7b7;
+  }
+
+  /* AYAR PANELLERİ */
+  .panel-box {
     display: none;
     background: var(--card-bg);
     border: 2px solid #cbd5e1;
@@ -163,7 +178,16 @@
     box-shadow: 0 10px 25px rgba(0,0,0,0.08);
   }
 
-  .bell-panel.open { display: block; }
+  .panel-box.open { display: block; }
+
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
 
   .bell-grid {
     display: grid;
@@ -202,6 +226,29 @@
     font-weight: 600;
   }
 
+  /* BİLDİRİM AYAR SATIRI */
+  .notif-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    background: #f8fafc;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-top: 10px;
+    font-size: 0.82rem;
+  }
+
+  .notif-options select {
+    padding: 5px 8px;
+    border-radius: 7px;
+    border: 1px solid #cbd5e1;
+    font-weight: 600;
+    background: #fff;
+  }
+
+  /* ARAÇ ÇUBUĞU */
   .toolbar {
     display: flex;
     flex-wrap: wrap;
@@ -215,10 +262,11 @@
     margin-bottom: 14px;
   }
 
-  .filters {
+  .filters, .tool-actions {
     display: flex;
     gap: 6px;
     flex-wrap: wrap;
+    align-items: center;
   }
 
   button.btn {
@@ -238,9 +286,40 @@
     border-color: var(--primary);
   }
 
+  button.btn-edit-mode {
+    background: #fef3c7;
+    color: #92400e;
+    border-color: #fcd34d;
+  }
+
+  button.btn-edit-mode.editing {
+    background: #16a34a;
+    color: #fff;
+    border-color: #16a34a;
+  }
+
   button.btn-save { background: #16a34a; color: #fff; border-color: #16a34a; }
   button.btn-reset { color: #dc2626; border-color: #fecaca; background: #fef2f2; }
 
+  .edit-hint-bar {
+    display: none;
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    color: #78350f;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .edit-hint-bar.open { display: flex; }
+
+  /* TABLO */
   .table-wrapper {
     background: var(--card-bg);
     border-radius: 16px;
@@ -305,7 +384,7 @@
   td.slot {
     padding: 6px;
     border-right: 1px solid var(--border);
-    height: 80px;
+    height: 82px;
     width: calc((100% - 115px) / 7);
   }
 
@@ -321,6 +400,14 @@
     font-size: 0.74rem;
   }
 
+  body.edit-active .empty-slot {
+    cursor: pointer;
+    border-color: #f59e0b;
+    background: #fffbeb;
+    color: #b45309;
+    font-weight: 700;
+  }
+
   .lesson-card {
     height: 100%;
     border-radius: 10px;
@@ -334,6 +421,10 @@
     position: relative;
     user-select: none;
     border-left: 5px solid transparent;
+  }
+
+  body.edit-active .lesson-card {
+    outline: 2px dashed #f59e0b;
   }
 
   .lesson-card.now-active {
@@ -385,22 +476,93 @@
   .class-name { font-size: 1.02rem; font-weight: 800; }
   .subject-name { font-size: 0.7rem; font-weight: 700; margin-top: 2px; opacity: 0.85; }
 
-  /* 5. Sınıflar */
+  /* Sınıf Renkleri (5, 6, 7, 8. Sınıflar ve Şubeler için Dinamik Palet) */
   .c-5A { background: #fff1f2; color: #9f1239; border-left-color: #f43f5e; }
   .c-5B { background: #fff7ed; color: #9a3412; border-left-color: #f97316; }
   .c-5C { background: #fefce8; color: #854d0e; border-left-color: #eab308; }
   .c-5D { background: #fdf4ff; color: #86198f; border-left-color: #d946ef; }
   .c-5E { background: #fef2f2; color: #991b1b; border-left-color: #ef4444; }
+  .c-5F { background: #fff1f2; color: #be123c; border-left-color: #fb7185; }
 
-  /* 6. Sınıflar */
   .c-6A { background: #eff6ff; color: #1e40af; border-left-color: #3b82f6; }
   .c-6B { background: #ecfdf5; color: #065f46; border-left-color: #10b981; }
   .c-6C { background: #f0fdfa; color: #115e59; border-left-color: #14b8a6; }
   .c-6D { background: #eef2ff; color: #3730a3; border-left-color: #6366f1; }
   .c-6E { background: #f5f3ff; color: #5b21b6; border-left-color: #8b5cf6; }
+  .c-6F { background: #ecfeff; color: #155e75; border-left-color: #06b6d4; }
+
+  .c-default { background: #f1f5f9; color: #1e293b; border-left-color: #475569; }
+
+  /* HÜCRE DÜZENLEME MODALI */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    z-index: 50;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .modal-backdrop.open { display: flex; }
+
+  .modal-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 20px;
+    width: 100%;
+    max-width: 360px;
+    box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+  }
+
+  .modal-card h4 {
+    font-size: 1.05rem;
+    margin-bottom: 12px;
+    color: #0f172a;
+  }
+
+  .modal-card input {
+    width: 100%;
+    padding: 11px 12px;
+    border: 2px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .modal-card input:focus {
+    outline: none;
+    border-color: #4f46e5;
+  }
+
+  .quick-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .chip {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
 
   @media (max-width: 640px) {
-    .live-main-text { font-size: 1.45rem; }
+    .live-main-text { font-size: 1.42rem; }
     .live-right { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; }
     .clock-box { text-align: left; }
   }
@@ -409,6 +571,7 @@
 <body>
 
 <div class="container">
+  <!-- CANLI DURUM KARTI -->
   <div id="live-banner" class="live-banner">
     <div class="live-left">
       <div class="live-pill">
@@ -423,28 +586,60 @@
         <div class="live-clock" id="live-clock">--:--:--</div>
         <div class="live-date" id="live-date">---</div>
       </div>
-      <button class="btn-bell-settings" onclick="toggleBellPanel()">⏰ Zil Saatleri</button>
+      <div class="banner-btns">
+        <button id="btn-notif" class="btn-glass" onclick="handleNotifButton()">🔔 Bildirim Aç</button>
+        <button class="btn-glass" onclick="toggleBellPanel()">⏰ Zil & Ayar</button>
+      </div>
     </div>
   </div>
 
-  <div id="bell-panel" class="bell-panel">
-    <h3 style="font-size:1rem;">⏰ Okul Zil Saatleri</h3>
+  <!-- ZİL SAATLERİ & BİLDİRİM AYAR PANELİ -->
+  <div id="bell-panel" class="panel-box">
+    <div class="panel-header">
+      <h3 style="font-size:1rem;">⏰ Zil Saatleri ve Bildirim Ayarları</h3>
+      <button class="btn" onclick="testNotificationAndBell()">🔊 Bildirim & Zil Test Et</button>
+    </div>
+
+    <div class="notif-options">
+      <label style="font-weight:700;">Bildirim Zamanı:</label>
+      <select id="notif-offset" onchange="saveNotifPrefs()">
+        <option value="0">Tam ders zili çaldığında (0 dk)</option>
+        <option value="2">Dersten 2 dakika önce</option>
+        <option value="3">Dersten 3 dakika önce</option>
+        <option value="5">Dersten 5 dakika önce</option>
+      </select>
+      <label style="display:inline-flex; align-items:center; gap:5px; font-weight:600; cursor:pointer;">
+        <input type="checkbox" id="notif-sound" checked onchange="saveNotifPrefs()"> Zil sesi çal
+      </label>
+    </div>
+
     <div class="bell-grid" id="bell-grid"></div>
     <div style="display:flex; justify-content:flex-end; gap:8px;">
-      <button class="btn btn-reset" onclick="resetBellTimes()">Varsayılan</button>
+      <button class="btn btn-reset" onclick="resetBellTimes()">Varsayılan Saatler</button>
       <button class="btn btn-save" onclick="saveBellTimes()">💾 Kaydet</button>
     </div>
   </div>
 
+  <!-- DÜZENLEME MODU UYARI ÇUBUĞU -->
+  <div id="edit-hint-bar" class="edit-hint-bar">
+    <span>✏️ <strong>Düzenleme Modu Açık:</strong> Yeni dönem programını girmek için tablodaki herhangi bir kutuya dokunun.</span>
+    <button class="btn btn-reset" onclick="resetScheduleToDefault()">İlk Programa Dön</button>
+  </div>
+
+  <!-- FİLTRE VE ARAÇ ÇUBUĞU -->
   <div class="toolbar">
     <div class="filters">
       <button class="btn active" onclick="filterGrade('all', this)">Tümü</button>
       <button class="btn" onclick="filterGrade('5', this)">5. Sınıflar</button>
       <button class="btn" onclick="filterGrade('6', this)">6. Sınıflar</button>
     </div>
-    <button class="btn btn-reset" onclick="resetDone()">✓ İşaretleri Sıfırla</button>
+    <div class="tool-actions">
+      <button id="btn-edit-mode" class="btn btn-edit-mode" onclick="toggleEditMode()">✏️ Programı Düzenle</button>
+      <button class="btn btn-reset" onclick="resetDone()">✓ İşaretleri Sıfırla</button>
+    </div>
   </div>
 
+  <!-- HAFTALIK TABLO -->
   <div class="table-wrapper">
     <table>
       <thead id="table-head"></thead>
@@ -453,12 +648,37 @@
   </div>
 </div>
 
+<!-- HÜCRE DÜZENLEME PENCERESİ -->
+<div id="edit-modal" class="modal-backdrop" onclick="if(event.target===this) closeEditModal()">
+  <div class="modal-card">
+    <h4 id="modal-title">Dersi Düzenle</h4>
+    <input type="text" id="modal-input" placeholder="Örn: 6/B veya boş bırakın" maxlength="12">
+    <div class="quick-chips">
+      <span class="chip" onclick="setModalVal('5/A')">5/A</span>
+      <span class="chip" onclick="setModalVal('5/B')">5/B</span>
+      <span class="chip" onclick="setModalVal('5/C')">5/C</span>
+      <span class="chip" onclick="setModalVal('5/D')">5/D</span>
+      <span class="chip" onclick="setModalVal('5/E')">5/E</span>
+      <span class="chip" onclick="setModalVal('6/A')">6/A</span>
+      <span class="chip" onclick="setModalVal('6/B')">6/B</span>
+      <span class="chip" onclick="setModalVal('6/C')">6/C</span>
+      <span class="chip" onclick="setModalVal('6/D')">6/D</span>
+      <span class="chip" onclick="setModalVal('6/E')">6/E</span>
+      <span class="chip" style="color:#dc2626;" onclick="setModalVal('')">Boş Yap</span>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeEditModal()">İptal</button>
+      <button class="btn btn-save" onclick="saveSlotEdit()">Kaydet</button>
+    </div>
+  </div>
+</div>
+
 <script>
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
   }
 
-  const scheduleData = [
+  const defaultScheduleData = [
     { day: "Pazartesi", dayIndex: 1, slots: ["6/B", "6/B", null, "6/E", "6/E", "5/E", "5/E"] },
     { day: "Salı",      dayIndex: 2, slots: ["6/A", "6/A", null, "5/D", "5/D", "6/C", "6/C"] },
     { day: "Çarşamba",  dayIndex: 3, slots: [null, null, null, null, null, null, null] },
@@ -476,12 +696,145 @@
     { start: "14:20", end: "15:00" }
   ];
 
-  const STORAGE_DONE = "bilisim_ders_programi_done_v3";
-  const STORAGE_BELLS = "bilisim_zil_saatleri_v3";
+  const STORAGE_SCHEDULE = "bilisim_ders_programi_data_v4";
+  const STORAGE_DONE = "bilisim_ders_programi_done_v4";
+  const STORAGE_BELLS = "bilisim_zil_saatleri_v4";
+  const STORAGE_NOTIF = "bilisim_notif_prefs_v4";
 
+  let scheduleData = JSON.parse(localStorage.getItem(STORAGE_SCHEDULE) || "null") || JSON.parse(JSON.stringify(defaultScheduleData));
   let doneSlots = JSON.parse(localStorage.getItem(STORAGE_DONE) || "{}");
   let bellTimes = JSON.parse(localStorage.getItem(STORAGE_BELLS) || "null") || JSON.parse(JSON.stringify(defaultBellTimes));
+  let notifPrefs = JSON.parse(localStorage.getItem(STORAGE_NOTIF) || '{"enabled":false,"offset":0,"sound":true}');
+
+  let isEditMode = false;
+  let editingTarget = null;
   let lastRenderedStateKey = "";
+  let lastNotifiedKey = "";
+
+  // Web Audio API ile okul zili sesi üretici (harici dosya gerektirmez)
+  function playSchoolChime() {
+    if (!notifPrefs.sound) return;
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      const ctx = new AudioCtx();
+      const notes = [523.25, 659.25, 783.99, 1046.50]; // Do - Mi - Sol - İnce Do
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.22);
+        gain.gain.setValueAtTime(0.001, ctx.currentTime + idx * 0.22);
+        gain.gain.exponentialRampToValueAtTime(0.28, ctx.currentTime + idx * 0.22 + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.22 + 0.55);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + idx * 0.22);
+        osc.stop(ctx.currentTime + idx * 0.22 + 0.6);
+      });
+    } catch (e) {}
+  }
+
+  function updateNotifButtonUI() {
+    const btn = document.getElementById("btn-notif");
+    const granted = ("Notification" in window) && Notification.permission === "granted" && notifPrefs.enabled;
+    if (granted) {
+      btn.textContent = "🔔 Bildirim Açık";
+      btn.classList.add("notif-on");
+    } else {
+      btn.textContent = "🔕 Bildirim Aç";
+      btn.classList.remove("notif-on");
+    }
+    document.getElementById("notif-offset").value = String(notifPrefs.offset || 0);
+    document.getElementById("notif-sound").checked = notifPrefs.sound !== false;
+  }
+
+  async function handleNotifButton() {
+    if (!("Notification" in window)) {
+      alert("Tarayıcınız bildirimleri desteklemiyor.");
+      return;
+    }
+    if (Notification.permission !== "granted") {
+      const perm = await Notification.requestPermission();
+      if (perm === "granted") {
+        notifPrefs.enabled = true;
+        saveNotifPrefs();
+        sendSystemNotification("Bildirimler Aktif!", "Ders saati geldiğinde sınıf bilgisi gönderilecek.");
+      } else {
+        alert("Bildirim izni reddedildi. Tarayıcı site ayarlarından bildirimlere izin verebilirsiniz.");
+      }
+    } else {
+      notifPrefs.enabled = !notifPrefs.enabled;
+      saveNotifPrefs();
+    }
+    updateNotifButtonUI();
+  }
+
+  function saveNotifPrefs() {
+    notifPrefs.offset = Number(document.getElementById("notif-offset").value || 0);
+    notifPrefs.sound = document.getElementById("notif-sound").checked;
+    localStorage.setItem(STORAGE_NOTIF, JSON.stringify(notifPrefs));
+  }
+
+  function sendSystemNotification(title, body) {
+    playSchoolChime();
+    if (navigator.vibrate) navigator.vibrate([250, 120, 250]);
+
+    if ("Notification" in window && Notification.permission === "granted") {
+      if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.ready.then(reg => {
+          reg.showNotification(title, {
+            body: body,
+            icon: "icon.svg",
+            badge: "icon.svg",
+            tag: "ders-bildirimi",
+            renotify: true
+          });
+        });
+      } else {
+        new Notification(title, { body: body, icon: "icon.svg" });
+      }
+    }
+  }
+
+  function testNotificationAndBell() {
+    if ("Notification" in window && Notification.permission !== "granted") {
+      handleNotifButton();
+      return;
+    }
+    notifPrefs.enabled = true;
+    saveNotifPrefs();
+    updateNotifButtonUI();
+    sendSystemNotification("🔔 Ders Başlıyor: 6/B — BİLİŞİM", "1. Ders (08:30 - 09:10) • İyi dersler!");
+  }
+
+  function checkLessonNotification(now) {
+    if (!notifPrefs.enabled) return;
+    const jsDay = now.getDay();
+    const todayRow = scheduleData.find(d => d.dayIndex === jsDay);
+    if (!todayRow) return;
+
+    const nowMins = now.getHours() * 60 + now.getMinutes();
+    const offset = Number(notifPrefs.offset || 0);
+
+    for (let i = 0; i < 7; i++) {
+      const cls = todayRow.slots[i];
+      if (!cls) continue;
+      const startM = timeToMinutes(bellTimes[i].start);
+      const triggerM = startM - offset;
+
+      if (nowMins === triggerM) {
+        const key = `${now.toDateString()}-slot-${i}-off-${offset}`;
+        if (lastNotifiedKey !== key) {
+          lastNotifiedKey = key;
+          const timeText = offset === 0 ? "Ders Başladı!" : `Derse ${offset} Dakika Kaldı!`;
+          sendSystemNotification(
+            `👉 ${cls} — BİLİŞİM (${timeText})`,
+            `${i + 1}. Ders (${bellTimes[i].start} - ${bellTimes[i].end})`
+          );
+        }
+      }
+    }
+  }
 
   function timeToMinutes(hhmm) {
     const [h, m] = hhmm.split(":").map(Number);
@@ -516,7 +869,10 @@
   function toggleBellPanel() {
     const panel = document.getElementById("bell-panel");
     panel.classList.toggle("open");
-    if (panel.classList.contains("open")) renderBellSettings();
+    if (panel.classList.contains("open")) {
+      renderBellSettings();
+      updateNotifButtonUI();
+    }
   }
 
   function saveBellTimes() {
@@ -543,6 +899,67 @@
     updateLiveStatus();
   }
 
+  // DÜZENLEME MODU FONKSİYONLARI
+  function toggleEditMode() {
+    isEditMode = !isEditMode;
+    document.body.classList.toggle("edit-active", isEditMode);
+    const btn = document.getElementById("btn-edit-mode");
+    const bar = document.getElementById("edit-hint-bar");
+    if (isEditMode) {
+      btn.textContent = "✓ Düzenlemeyi Bitir";
+      btn.classList.add("editing");
+      bar.classList.add("open");
+    } else {
+      btn.textContent = "✏️ Programı Düzenle";
+      btn.classList.remove("editing");
+      bar.classList.remove("open");
+    }
+  }
+
+  function openEditModal(dayRowIdx, slotIdx) {
+    editingTarget = { dayRowIdx, slotIdx };
+    const row = scheduleData[dayRowIdx];
+    document.getElementById("modal-title").textContent = `${row.day} • ${slotIdx + 1}. Ders`;
+    const input = document.getElementById("modal-input");
+    input.value = row.slots[slotIdx] || "";
+    document.getElementById("edit-modal").classList.add("open");
+    setTimeout(() => input.focus(), 50);
+  }
+
+  function setModalVal(val) {
+    document.getElementById("modal-input").value = val;
+  }
+
+  function closeEditModal() {
+    document.getElementById("edit-modal").classList.remove("open");
+    editingTarget = null;
+  }
+
+  function saveSlotEdit() {
+    if (!editingTarget) return;
+    const raw = document.getElementById("modal-input").value.trim().toUpperCase();
+    scheduleData[editingTarget.dayRowIdx].slots[editingTarget.slotIdx] = raw === "" ? null : raw;
+    localStorage.setItem(STORAGE_SCHEDULE, JSON.stringify(scheduleData));
+    closeEditModal();
+    lastRenderedStateKey = "";
+    updateLiveStatus();
+  }
+
+  function resetScheduleToDefault() {
+    if (confirm("Program ilk baştaki varsayılan haline döndürülsün mü?")) {
+      scheduleData = JSON.parse(JSON.stringify(defaultScheduleData));
+      localStorage.removeItem(STORAGE_SCHEDULE);
+      lastRenderedStateKey = "";
+      updateLiveStatus();
+    }
+  }
+
+  function getCardColorClass(cls) {
+    const clean = cls.replace(/[^A-Z0-9]/gi, "").toUpperCase();
+    const known = ["5A","5B","5C","5D","5E","5F","6A","6B","6C","6D","6E","6F"];
+    return known.includes(clean) ? `c-${clean}` : "c-default";
+  }
+
   function evaluateCurrentState(now) {
     const jsDay = now.getDay();
     const nowMins = now.getHours() * 60 + now.getMinutes();
@@ -553,7 +970,7 @@
         bannerClass: "state-free",
         pill: "HAFTA SONU",
         main: "Bugün Ders Yok 🎉",
-        sub: "Pazartesi 1. ders (08:30): 6/B Bilişim",
+        sub: "İyi tatiller!",
         activeSlotIndex: -1,
         nextSlotIndex: -1,
         todayIndex: jsDay
@@ -565,7 +982,7 @@
         bannerClass: "state-free",
         pill: `${todayRow.day.toUpperCase()} • BOŞ GÜN`,
         main: "Bugün Hiç Dersiniz Yok ☕",
-        sub: "Çarşamba günü programınız tamamen boş.",
+        sub: `${todayRow.day} günü programınız tamamen boş.`,
         activeSlotIndex: -1,
         nextSlotIndex: -1,
         todayIndex: jsDay
@@ -669,7 +1086,7 @@
     const tbody = document.getElementById("schedule-body");
     tbody.innerHTML = "";
 
-    scheduleData.forEach((row) => {
+    scheduleData.forEach((row, dayRowIdx) => {
       const tr = document.createElement("tr");
       const isToday = row.dayIndex === state.todayIndex;
 
@@ -682,17 +1099,22 @@
         const td = document.createElement("td");
         td.className = "slot";
         if (!cls) {
-          td.innerHTML = '<div class="empty-slot">Boş</div>';
+          const emptyDiv = document.createElement("div");
+          emptyDiv.className = "empty-slot";
+          emptyDiv.textContent = isEditMode ? "+ Ekle" : "Boş";
+          emptyDiv.addEventListener("click", () => {
+            if (isEditMode) openEditModal(dayRowIdx, idx);
+          });
+          td.appendChild(emptyDiv);
         } else {
           const slotId = `${row.day}-${idx + 1}`;
           const grade = cls.split("/")[0];
-          const cleanClass = cls.replace("/", "");
           const isDone = !!doneSlots[slotId];
           const isNow = isToday && state.activeSlotIndex === idx;
           const isNext = isToday && state.nextSlotIndex === idx && !isNow;
 
           const card = document.createElement("div");
-          card.className = `lesson-card c-${cleanClass}` + (isDone ? " done" : "") + (isNow ? " now-active" : "") + (isNext ? " now-next" : "");
+          card.className = `lesson-card ${getCardColorClass(cls)}` + (isDone ? " done" : "") + (isNow ? " now-active" : "") + (isNext ? " now-next" : "");
           card.dataset.grade = grade;
 
           let badgeHtml = "";
@@ -701,6 +1123,10 @@
 
           card.innerHTML = `${badgeHtml}<span class="class-name">${cls}</span><span class="subject-name">BİLİŞİM</span>`;
           card.addEventListener("click", () => {
+            if (isEditMode) {
+              openEditModal(dayRowIdx, idx);
+              return;
+            }
             if (doneSlots[slotId]) { delete doneSlots[slotId]; card.classList.remove("done"); }
             else { doneSlots[slotId] = true; card.classList.add("done"); }
             localStorage.setItem(STORAGE_DONE, JSON.stringify(doneSlots));
@@ -721,13 +1147,15 @@
     document.getElementById("live-clock").textContent = now.toTimeString().slice(0, 8);
     document.getElementById("live-date").textContent = `${now.getDate()} ${monthsTr[now.getMonth()]} • ${daysTr[now.getDay()]}`;
 
+    checkLessonNotification(now);
+
     const state = evaluateCurrentState(now);
     document.getElementById("live-banner").className = `live-banner ${state.bannerClass}`;
     document.getElementById("live-status-label").textContent = state.pill;
     document.getElementById("live-main-text").textContent = state.main;
     document.getElementById("live-sub-text").textContent = state.sub;
 
-    const stateKey = `${state.todayIndex}-${state.activeSlotIndex}-${state.nextSlotIndex}-${JSON.stringify(bellTimes)}`;
+    const stateKey = `${state.todayIndex}-${state.activeSlotIndex}-${state.nextSlotIndex}-${isEditMode}-${JSON.stringify(bellTimes)}-${JSON.stringify(scheduleData)}`;
     if (stateKey !== lastRenderedStateKey) {
       lastRenderedStateKey = stateKey;
       renderTable(state);
@@ -748,6 +1176,7 @@
     });
   }
 
+  updateNotifButtonUI();
   updateLiveStatus();
   setInterval(updateLiveStatus, 1000);
 </script>
